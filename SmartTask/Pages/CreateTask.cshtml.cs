@@ -31,6 +31,9 @@ namespace SmartTask.Pages
         [BindProperty]
         public Priority Priority { get; set; } = Priority.Medium;
 
+        [BindProperty]
+        public Status Status { get; set; } = Status.NotStarted;
+
         public string? ErrorMessage { get; set; }
 
         public void OnGet()
@@ -53,7 +56,7 @@ namespace SmartTask.Pages
                 Description = Description = Description ?? "",
                 Deadline = Deadline,
                 Priority = Priority,
-                Status = Status.NotStarted,
+                Status = Status,
                 UserId = userId!
             };
 
