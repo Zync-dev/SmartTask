@@ -347,6 +347,14 @@ footer {
     min-height: calc(100vh - 53px);
 }
 
+.auth-wrapper {
+    min-height: calc(100vh - 53px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+}
+
 .auth-left {
     background-color: var(--bg-mantle);
     border-right: 1px solid var(--bg-surface);
