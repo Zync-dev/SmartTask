@@ -1,0 +1,83 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "SmartTask";
+}
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-badge">
+        <span>✦ AI-drevet opgavestyring</span>
+    </div>
+    <h1>
+        Styr dine opgaver.<br>
+        <span class="hero-accent">Bliv mere produktiv.</span>
+    </h1>
+    <p>SmartTask hjælper dig med at organisere, prioritere og fuldføre dine opgaver — med hjælp fra AI når du har brug for det.</p>
+    <div class="hero-buttons">
+        <a asp-page="/Register" class="btn-primary">Kom i gang gratis</a>
+        <a href="#features" class="btn-secondary">Se hvordan det virker</a>
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features-section" id="features">
+    <div class="features-header">
+        <span class="features-label">FUNKTIONER</span>
+        <h2>Alt hvad du har brug for</h2>
+    </div>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon icon-blue">
+                <i class="bi bi-check2-square"></i>
+            </div>
+            <h3>Opgavestyring</h3>
+            <p>Opret, rediger og organiser dine opgaver med deadlines og prioritet.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon icon-purple">
+                <i class="bi bi-stars"></i>
+            </div>
+            <h3>AI-assistent</h3>
+            <p>Lad AI'en nedbryde store opgaver og foreslå den bedste prioritering.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon icon-green">
+                <i class="bi bi-bar-chart-line"></i>
+            </div>
+            <h3>Statistik</h3>
+            <p>Følg din produktivitet med overblik over færdige og igangværende opgaver.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon icon-yellow">
+                <i class="bi bi-calendar-event"></i>
+            </div>
+            <h3>Deadlines</h3>
+            <p>Hold styr på dine deadlines og se hvad der haster mest.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon icon-red">
+                <i class="bi bi-flag"></i>
+            </div>
+            <h3>Prioritering</h3>
+            <p>Markér opgaver som høj, medium eller lav prioritet og fokusér på det vigtige.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon icon-blue">
+                <i class="bi bi-person-circle"></i>
+            </div>
+            <h3>Din konto</h3>
+            <p>Log ind og få adgang til dine opgaver fra enhver browser.</p>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+    <h2>Klar til at komme i gang?</h2>
+    <p>Opret en gratis konto og begynd at organisere dine opgaver i dag.</p>
+    <div class="cta-buttons">
+        <a asp-page="/Register" class="btn-primary">Opret konto</a>
+        <a asp-page="/Login" class="btn-secondary">Log ind</a>
+    </div>
+</section>

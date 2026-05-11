@@ -1,0 +1,138 @@
+﻿@page
+@model SmartTask.Pages.DashboardModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="dashboard-wrapper">
+    @if (TempData["Success"] != null)
+    {
+        <div class="success-toast">
+            <span>✓</span> @TempData["Success"]
+        </div>
+    }
+
+    <!-- VENSTRE SIDE -->
+    <div class="dashboard-main">
+
+        <!-- STATISTIK KORT -->
+        <div class="stats-grid">
+            <div class="stat-card stat-blue">
+                <span class="stat-label">Ikke startet</span>
+                <span class="stat-number">@Model.CountNotStarted</span>
+            </div>
+            <div class="stat-card stat-yellow">
+                <span class="stat-label">Igangværende</span>
+                <span class="stat-number" style="color: var(--priority-medium)">@Model.CountInProgress</span>
+            </div>
+            <div class="stat-card stat-green">
+                <span class="stat-label">Færdige</span>
+                <span class="stat-number" style="color: var(--priority-low)">@Model.CountDone</span>
+            </div>
+            <div class="stat-card stat-purple">
+                <span class="stat-label">I alt</span>
+                <span class="stat-number" style="color: var(--accent-purple)">@Model.TodoItems.Count</span>
+            </div>
+        </div>
+
+        <!-- OPGAVE HEADER -->
+        <div class="tasks-header">
+            <h2>Mine opgaver</h2>
+            <a asp-page="/CreateTask" class="btn-primary btn-sm">+ Ny opgave</a>
+        </div>
+
+        <!-- FILTERPILLS -->
+        <div class="filter-pills">
+            <a asp-page="/Dashboard" asp-route-filter="all"
+               class="pill @(Model.Filter == "all" ? "pill-active" : "")">Alle</a>
+            <a asp-page="/Dashboard" asp-route-filter="notstarted"
+               class="pill @(Model.Filter == "notstarted" ? "pill-active" : "")">Ikke startet</a>
+            <a asp-page="/Dashboard" asp-route-filter="inprogress"
+               class="pill @(Model.Filter == "inprogress" ? "pill-active" : "")">Igangværende</a>
+            <a asp-page="/Dashboard" asp-route-filter="done"
+               class="pill @(Model.Filter == "done" ? "pill-active" : "")">Færdige</a>
+            <a asp-page="/Dashboard" asp-route-filter="high"
+               class="pill @(Model.Filter == "high" ? "pill-active" : "")">Høj prioritet</a>
+            <a asp-page="/Dashboard" asp-route-filter="medium"
+               class="pill @(Model.Filter == "medium" ? "pill-active" : "")">Medium prioritet</a>
+            <a asp-page="/Dashboard" asp-route-filter="low"
+               class="pill @(Model.Filter == "low" ? "pill-active" : "")">Lav prioritet</a>
+        </div>
+
+        <!-- OPGAVELISTE -->
+        @if (Model.TodoItems.Count == 0)
+        {
+            <div class="tasks-empty">
+                <div class="tasks-empty-icon">✦</div>
+                <h3>Ingen opgaver endnu</h3>
+                <p>Kom i gang ved at oprette din første opgave. AI-assistenten hjælper dig med at prioritere og nedbryde dem.</p>
+                <a asp-page="/CreateTask" class="btn-primary">Opret din første opgave</a>
+            </div>
+        }
+        else
+        {
+            <div class="tasks-list">
+                @foreach (var task in Model.TodoItems)
+                {
+                    <div class="task-card @(task.Status == SmartTask.Models.Status.Done ? "task-done" : "")">
+                        <div class="task-left">
+                            <span class="priority-dot priority-@task.Priority.ToString().ToLower()"></span>
+                            <div class="task-info">
+                                <span class="task-title">@task.Title</span>
+                                @if (!string.IsNullOrEmpty(task.Description))
+                                {
+                                    <span class="task-desc">@task.Description</span>
+                                }
+                            </div>
+                        </div>
+                        <div class="task-right">
+                            @if (task.Deadline.HasValue)
+                            {
+                                <span class="task-deadline">@task.Deadline.Value.ToString("dd/MM/yyyy")</span>
+                            }
+                            <span class="task-status status-@task.Status.ToString().ToLower()">
+                                @(task.Status switch
+                                {
+                                    SmartTask.Models.Status.NotStarted => "Ikke startet",
+                                    SmartTask.Models.Status.InProgress => "Igangværende",
+                                    SmartTask.Models.Status.Done => "Færdig",
+                                    _ => ""
+                                })
+                            </span>
+                            <a asp-page="/EditTask" asp-route-id="@task.Id" class="btn-icon">✎</a>
+                            <form method="post" asp-page-handler="DeleteTask"
+                                  onsubmit="return confirm('Er du sikker på at du vil slette denne opgave?')">
+                                <input type="hidden" name="id" value="@task.Id" />
+                                <button type="submit" class="btn-icon btn-icon-danger">✕</button>
+                            </form>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+
+    <!-- HØJRE SIDE - AI PANEL -->
+    <div class="ai-panel">
+        <div class="ai-header">
+            <span class="ai-icon">✦</span>
+            <h3>AI-assistent</h3>
+        </div>
+        <p class="ai-description">Spørg AI om dine opgaver – få hjælp til prioritering eller nedbrydning i delopgaver.</p>
+
+        <form method="post" asp-page-handler="AskAi">
+            <div class="ai-input-wrapper">
+                <textarea name="AiPrompt" class="ai-input"
+                          placeholder="Fx: Hvilken opgave bør jeg starte med?"
+                          rows="3">@Model.AiPrompt</textarea>
+                <button type="submit" class="btn-primary btn-full" style="margin-top: 0.75rem;">Spørg AI</button>
+            </div>
+        </form>
+
+        @if (Model.AiResponse != null)
+        {
+            <div class="ai-response">@Model.AiResponse</div>
+        }
+    </div>
+
+</div>

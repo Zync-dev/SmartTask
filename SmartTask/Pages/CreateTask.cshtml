@@ -1,0 +1,54 @@
+﻿@page
+@model SmartTask.Pages.CreateTaskModel
+@{
+    ViewData["Title"] = "Ny opgave";
+}
+
+<div class="auth-wrapper">
+    <div class="auth-card" style="max-width: 550px;">
+
+        <div class="auth-header">
+            <h1>Ny opgave</h1>
+            <p>Udfyld oplysningerne om din opgave</p>
+        </div>
+
+        <form method="post">
+            <div class="form-group">
+                <label for="title">Titel</label>
+                <input type="text" id="title" name="title"
+                       placeholder="Hvad skal gøres?" />
+            </div>
+            <div class="form-group">
+                <label for="description">Beskrivelse</label>
+                <textarea id="description" name="description"
+                          placeholder="Valgfri beskrivelse..."></textarea>
+            </div>
+            <div class="form-group">
+                <label for="deadline">Deadline</label>
+                <input type="date" id="deadline" name="deadline" />
+            </div>
+            <div class="form-group">
+                <label for="priority">Prioritet</label>
+                <select id="priority" name="priority">
+                    <option value="Low">Lav</option>
+                    <option value="Medium" selected>Medium</option>
+                    <option value="High">Høj</option>
+                </select>
+            </div>
+
+            @if (Model.ErrorMessage != null)
+            {
+                <div class="auth-error">
+                    @Model.ErrorMessage
+                </div>
+            }
+
+            <button type="submit" class="btn-primary btn-full">Opret opgave</button>
+        </form>
+
+        <div class="auth-footer">
+            <p><a asp-page="/Dashboard">Tilbage til dashboard</a></p>
+        </div>
+
+    </div>
+</div>

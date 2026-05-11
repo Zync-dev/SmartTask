@@ -1,0 +1,55 @@
+﻿@page
+@model SmartTask.Pages.LoginModel
+@{
+    ViewData["Title"] = "Log ind";
+}
+
+<div class="auth-page">
+    <div class="auth-left">
+        <div class="auth-left-content">
+            <span class="auth-left-badge">✦ SmartTask</span>
+            <h2>Styr dine opgaver med AI</h2>
+            <p>Organisér, prioritér og fuldfør dine opgaver — med hjælp fra AI når du har brug for det.</p>
+            <div class="auth-left-features">
+                <div class="auth-feature">
+                    <i class="bi bi-check-circle"></i>
+                    <span>AI-drevet prioritering</span>
+                </div>
+                <div class="auth-feature">
+                    <i class="bi bi-check-circle"></i>
+                    <span>Fuld opgavestyring</span>
+                </div>
+                <div class="auth-feature">
+                    <i class="bi bi-check-circle"></i>
+                    <span>Statistik og overblik</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="auth-right">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1>Velkommen tilbage</h1>
+                <p>Log ind på din konto for at fortsætte</p>
+            </div>
+            <form method="post">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="din@email.dk" />
+                </div>
+                <div class="form-group">
+                    <label for="password">Adgangskode</label>
+                    <input type="password" id="password" name="password" placeholder="••••••••" />
+                </div>
+                @if (Model.ErrorMessage != null)
+                {
+                    <div class="auth-error">@Model.ErrorMessage</div>
+                }
+                <button type="submit" class="btn-primary btn-full">Log ind</button>
+            </form>
+            <div class="auth-footer">
+                <p>Har du ikke en konto? <a asp-page="/Register">Opret konto</a></p>
+            </div>
+        </div>
+    </div>
+</div>

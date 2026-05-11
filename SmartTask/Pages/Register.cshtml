@@ -1,0 +1,59 @@
+﻿@page
+@model SmartTask.Pages.RegisterModel
+@{
+    ViewData["Title"] = "Opret konto";
+}
+
+<div class="auth-page">
+    <div class="auth-left">
+        <div class="auth-left-content">
+            <span class="auth-left-badge">✦ SmartTask</span>
+            <h2>Kom i gang gratis</h2>
+            <p>Opret en konto og begynd at organisere dine opgaver med hjælp fra AI.</p>
+            <div class="auth-left-features">
+                <div class="auth-feature">
+                    <i class="bi bi-check-circle"></i>
+                    <span>Gratis at bruge</span>
+                </div>
+                <div class="auth-feature">
+                    <i class="bi bi-check-circle"></i>
+                    <span>AI-assistent inkluderet</span>
+                </div>
+                <div class="auth-feature">
+                    <i class="bi bi-check-circle"></i>
+                    <span>Ingen kreditkort påkrævet</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="auth-right">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1>Opret konto</h1>
+                <p>Kom i gang med SmartTask i dag</p>
+            </div>
+            <form method="post">
+                <div class="form-group">
+                    <label for="name">Navn</label>
+                    <input type="text" id="name" name="name" placeholder="Dit navn" />
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="din@email.dk" />
+                </div>
+                <div class="form-group">
+                    <label for="password">Adgangskode</label>
+                    <input type="password" id="password" name="password" placeholder="••••••••" />
+                </div>
+                @if (Model.ErrorMessage != null)
+                {
+                    <div class="auth-error">@Model.ErrorMessage</div>
+                }
+                <button type="submit" class="btn-primary btn-full">Opret konto</button>
+            </form>
+            <div class="auth-footer">
+                <p>Har du allerede en konto? <a asp-page="/Login">Log ind</a></p>
+            </div>
+        </div>
+    </div>
+</div>
