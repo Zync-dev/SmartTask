@@ -4,51 +4,88 @@
     ViewData["Title"] = "Ny opgave";
 }
 
-<div class="auth-wrapper">
-    <div class="auth-card" style="max-width: 550px;">
-
-        <div class="auth-header">
-            <h1>Ny opgave</h1>
+<div class="task-page-wrapper">
+    <div class="task-form-card">
+        <div class="task-form-left">
+            <h2>Ny opgave</h2>
             <p>Udfyld oplysningerne om din opgave</p>
-        </div>
-
-        <form method="post">
-            <div class="form-group">
-                <label for="title">Titel</label>
-                <input type="text" id="title" name="title"
-                       placeholder="Hvad skal gøres?" />
-            </div>
-            <div class="form-group">
-                <label for="description">Beskrivelse</label>
-                <textarea id="description" name="description"
-                          placeholder="Valgfri beskrivelse..."></textarea>
-            </div>
-            <div class="form-group">
-                <label for="deadline">Deadline</label>
-                <input type="date" id="deadline" name="deadline" />
-            </div>
-            <div class="form-group">
-                <label for="priority">Prioritet</label>
-                <select id="priority" name="priority">
-                    <option value="Low">Lav</option>
-                    <option value="Medium" selected>Medium</option>
-                    <option value="High">Høj</option>
-                </select>
-            </div>
-
-            @if (Model.ErrorMessage != null)
-            {
-                <div class="auth-error">
-                    @Model.ErrorMessage
+            <form method="post" id="taskForm">
+                <div class="form-group">
+                    <label for="title">Titel</label>
+                    <input type="text" id="title" name="title" placeholder="Hvad skal gøres?" />
                 </div>
-            }
-
-            <button type="submit" class="btn-primary btn-full">Opret opgave</button>
-        </form>
-
-        <div class="auth-footer">
-            <p><a asp-page="/Dashboard">Tilbage til dashboard</a></p>
+                <div class="form-group">
+                    <label for="description">Beskrivelse</label>
+                    <textarea id="description" name="description" placeholder="Valgfri beskrivelse..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="deadline">Deadline</label>
+                    <input type="date" id="deadline" name="deadline" />
+                </div>
+                @if (Model.ErrorMessage != null)
+                {
+                    <div class="auth-error">@Model.ErrorMessage</div>
+                }
+            </form>
+            <a asp-page="/Dashboard" class="task-back">Tilbage til dashboard</a>
         </div>
-
+        <div class="task-form-right">
+            <div class="task-meta-section">
+                <h3>PRIORITET</h3>
+                <div class="task-meta-pills">
+                    <label class="meta-pill">
+                        <input type="radio" name="priority" value="High" form="taskForm" />
+                        Høj
+                    </label>
+                    <label class="meta-pill meta-pill-medium meta-pill-active">
+                        <input type="radio" name="priority" value="Medium" form="taskForm" checked />
+                        Medium
+                    </label>
+                    <label class="meta-pill">
+                        <input type="radio" name="priority" value="Low" form="taskForm" />
+                        Lav
+                    </label>
+                </div>
+            </div>
+            <div class="task-meta-section">
+                <h3>STATUS</h3>
+                <div class="task-meta-pills">
+                    <label class="meta-pill meta-pill-blue meta-pill-active">
+                        <input type="radio" name="status" value="NotStarted" form="taskForm" checked />
+                        Ikke startet
+                    </label>
+                    <label class="meta-pill">
+                        <input type="radio" name="status" value="InProgress" form="taskForm" />
+                        Igangværende
+                    </label>
+                    <label class="meta-pill">
+                        <input type="radio" name="status" value="Done" form="taskForm" />
+                        Færdig
+                    </label>
+                </div>
+            </div>
+            <button type="submit" form="taskForm" class="btn-primary btn-full">Opret opgave</button>
+        </div>
     </div>
+
+    @section Scripts {
+        <script>
+                document.querySelectorAll('.task-meta-pills').forEach(group => {
+                    group.querySelectorAll('.meta-pill').forEach(pill => {
+                        pill.addEventListener('click', () => {
+                            const colorClass = group.closest('.task-meta-section').querySelector('h3').textContent.trim() === 'PRIORITET'
+                                ? { High: 'meta-pill-high', Medium: 'meta-pill-medium', Low: 'meta-pill-low' }
+                                : { NotStarted: 'meta-pill-blue', InProgress: 'meta-pill-medium', Done: 'meta-pill-low' };
+
+                            group.querySelectorAll('.meta-pill').forEach(p => {
+                                p.classList.remove('meta-pill-active', 'meta-pill-high', 'meta-pill-medium', 'meta-pill-low', 'meta-pill-blue');
+                            });
+
+                            const value = pill.querySelector('input').value;
+                            pill.classList.add('meta-pill-active', colorClass[value]);
+                        });
+                    });
+                });
+        </script>
+    }
 </div>

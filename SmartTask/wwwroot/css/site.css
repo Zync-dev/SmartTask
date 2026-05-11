@@ -39,9 +39,15 @@ a {
     text-decoration: none;
 }
 
-    a:hover {
-        color: var(--accent-purple);
-    }
+a:hover {
+    color: var(--accent-purple);
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    opacity: 0.5;
+    cursor: pointer;
+}
 
 /* ================================
    NAVBAR
@@ -932,4 +938,118 @@ footer {
     100% {
         opacity: 0;
     }
+}
+
+/* ================================
+   TASK FORM (OPRET / REDIGER)
+================================ */
+
+.task-page-wrapper {
+    min-height: calc(100vh - 53px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+}
+
+.task-form-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 1px solid var(--bg-surface);
+    border-radius: 16px;
+    overflow: hidden;
+    width: 100%;
+    max-width: 700px;
+}
+
+.task-form-left {
+    background-color: var(--bg-mantle);
+    padding: 2rem;
+    border-right: 1px solid var(--bg-surface);
+}
+
+.task-form-left h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+}
+
+.task-form-left p {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+}
+
+.task-back {
+    display: block;
+    text-align: center;
+    margin-top: 1.25rem;
+    font-size: 0.85rem;
+    color: var(--accent-blue);
+}
+
+.task-form-right {
+    background-color: #13131f;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    justify-content: space-between;
+}
+
+.task-meta-section h3 {
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+}
+
+.task-meta-pills {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.meta-pill {
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    border: 1px solid var(--bg-surface);
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+
+.meta-pill input[type="radio"] {
+    display: none;
+}
+
+.meta-pill:hover {
+    border-color: var(--accent-blue);
+    color: var(--accent-blue);
+}
+
+.meta-pill-active.meta-pill-high {
+    border-color: var(--priority-high);
+    color: var(--priority-high);
+    background: rgba(243, 139, 168, 0.1);
+}
+
+.meta-pill-active.meta-pill-medium {
+    border-color: var(--priority-medium);
+    color: var(--priority-medium);
+    background: rgba(249, 226, 175, 0.1);
+}
+
+.meta-pill-active.meta-pill-low {
+    border-color: var(--priority-low);
+    color: var(--priority-low);
+    background: rgba(166, 227, 161, 0.1);
+}
+
+.meta-pill-active.meta-pill-blue {
+    border-color: var(--accent-blue);
+    color: var(--accent-blue);
+    background: rgba(137, 180, 250, 0.1);
 }
