@@ -90,7 +90,7 @@ namespace SmartTask.Pages
             }
 
             var taskList = string.Join("\n", TodoItems.Select(t =>
-                $"- {t.Title} (Prioritet: {t.Priority}, Status: {t.Status}, Deadline: {t.Deadline?.ToString("dd/MM/yyyy") ?? "ingen"})"));
+                $"- {t.Title} (Beskrivelse: {t.Description}, Prioritet: {t.Priority}, Status: {t.Status}, Deadline: {t.Deadline?.ToString("dd/MM/yyyy") ?? "ingen"})"));
 
             var fullPrompt = $"Her er brugerens opgaver:\n{taskList}\n\nBrugerens spørgsmål: {AiPrompt}";
 

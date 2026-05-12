@@ -113,6 +113,7 @@
     </div>
 
     <!-- HØJRE SIDE - AI PANEL -->
+    <!-- HØJRE SIDE - AI PANEL -->
     <div class="ai-panel">
         <div class="ai-header" style="display: flex; align-items: center; gap: 0.65rem; margin-bottom: 0.65rem;">
             <div class="ai-icon" style="display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
@@ -122,9 +123,24 @@
         </div>
         <p class="ai-description">Spørg AI om dine opgaver – få hjælp til prioritering eller nedbrydning i delopgaver.</p>
 
-        <form method="post" asp-page-handler="AskAi">
+        <form method="post" asp-page-handler="AskAi" id="ai-form">
+            <div class="ai-quick-btns">
+                <button type="button" class="ai-quick-btn" onclick="askAi('Hvilken opgave bør jeg prioritere højest lige nu, og hvorfor?')">
+                    <i class="bi bi-sort-down"></i> Prioritér
+                </button>
+                <button type="button" class="ai-quick-btn" onclick="askAi('Nedbryd mine igangværende opgaver i konkrete delopgaver jeg kan handle på i dag.')">
+                    <i class="bi bi-diagram-3"></i> Nedbryd
+                </button>
+                <button type="button" class="ai-quick-btn" onclick="askAi('Hvad bør jeg fokusere på i dag baseret på mine deadlines?')">
+                    <i class="bi bi-crosshair"></i> Fokus i dag
+                </button>
+                <button type="button" class="ai-quick-btn" onclick="askAi('Er jeg bagud med nogen opgaver? Hvilke deadlines er tættest på?')">
+                    <i class="bi bi-calendar-event"></i> Tjek deadlines
+                </button>
+            </div>
+
             <div class="ai-input-wrapper">
-                <textarea name="AiPrompt" class="ai-input"
+                <textarea name="AiPrompt" id="ai-prompt" class="ai-input"
                           placeholder="Fx: Hvilken opgave bør jeg starte med?"
                           rows="3">@Model.AiPrompt</textarea>
                 <button type="submit" class="btn-primary btn-full" style="margin-top: 0.75rem;">Spørg AI</button>
@@ -136,5 +152,27 @@
             <div class="ai-response">@Model.AiResponse</div>
         }
     </div>
-
 </div>
+
+@section Scripts {
+    <script>
+        const form = document.getElementById('ai-form');
+        const btn = form.querySelector('button[type="submit"]');
+
+        function askAi(prompt) {
+            document.getElementById('ai-prompt').value = prompt;
+            setLoading();
+            form.submit();
+        }
+
+        form.addEventListener('submit', function () {
+            setLoading();
+        });
+
+        function setLoading() {
+            btn.disabled = true;
+            btn.style.opacity = '0.75';
+            btn.innerHTML = '<span class="ai-spinner"></span> Tænker...';
+        }
+    </script>
+}
