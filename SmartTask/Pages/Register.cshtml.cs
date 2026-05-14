@@ -6,8 +6,10 @@ namespace SmartTask.Pages
 {
     public class RegisterModel : PageModel
     {
+        // ASP.NET Core user manager - bruges til at håndtere brugere
         private readonly UserManager<IdentityUser> _userManager;
 
+        // Dependency-inejction - usermanageren hentes altså i det øjeblik, klassen oprettes
         public RegisterModel(UserManager<IdentityUser> userManager)
         {
             _userManager = userManager;
@@ -24,12 +26,11 @@ namespace SmartTask.Pages
 
         public string? ErrorMessage { get; set; }
 
-        public void OnGet()
-        {
-        }
-
+        // Sender Async POST til ASP.NET Core Identity
+        // EF Core opretter automatisk en INSERT på baggrund af informationerne
         public async Task<IActionResult> OnPostAsync()
         {
+            //IdentityUser er en klasse leveret af ASP.NET core identity
             var user = new IdentityUser
             {
                 UserName = Email,

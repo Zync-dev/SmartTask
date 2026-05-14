@@ -1,5 +1,7 @@
 ﻿namespace SmartTask.Models
 {
+    // Klassen for ToDoItem
+
     public enum Priority
     {
         Low,

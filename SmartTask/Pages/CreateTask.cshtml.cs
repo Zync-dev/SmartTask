@@ -13,6 +13,7 @@ namespace SmartTask.Pages
         private readonly ApplicationDbContext _db;
         private readonly UserManager<IdentityUser> _userManager;
 
+        // db og usermanager hentes når klassen oprettes
         public CreateTaskModel(ApplicationDbContext db, UserManager<IdentityUser> userManager)
         {
             _db = db;
@@ -36,12 +37,10 @@ namespace SmartTask.Pages
 
         public string? ErrorMessage { get; set; }
 
-        public void OnGet()
-        {
-        }
-
+        // Opgave oprettes POST
         public async Task<IActionResult> OnPostAsync()
         {
+            // Tjek om titel er tom
             if (string.IsNullOrWhiteSpace(Title))
             {
                 ErrorMessage = "Titel må ikke være tom.";
@@ -50,6 +49,7 @@ namespace SmartTask.Pages
 
             var userId = _userManager.GetUserId(User);
 
+            // Opret nyt task objekt og udfyld med brugerens indtastede data fra <form>-feltet
             var task = new TodoItem
             {
                 Title = Title,
@@ -60,9 +60,11 @@ namespace SmartTask.Pages
                 UserId = userId!
             };
 
+            // Den opdaterede task bliver oprettet i databasen af EF Core
             _db.TodoItems.Add(task);
             await _db.SaveChangesAsync();
 
+            // Brugeren sendes tilbage til /Dashboard med en succes-notifikation
             TempData["Success"] = "Opgave oprettet!";
             return RedirectToPage("/Dashboard");
         }

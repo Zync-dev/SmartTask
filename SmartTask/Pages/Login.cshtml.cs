@@ -6,8 +6,10 @@ namespace SmartTask.Pages
 {
     public class LoginModel : PageModel
     {
+        // ASP.NET Identity klasse, indeholder information om brugerens login status
         private readonly SignInManager<IdentityUser> _signInManager;
 
+        // Hent signInManager når klassen oprettes
         public LoginModel(SignInManager<IdentityUser> signInManager)
         {
             _signInManager = signInManager;
@@ -21,12 +23,10 @@ namespace SmartTask.Pages
 
         public string? ErrorMessage { get; set; }
 
-        public void OnGet()
-        {
-        }
-
+        // Her logges brugeren ind
         public async Task<IActionResult> OnPostAsync()
         {
+            // Tjek om brugeren findes, og om alle data er korrekte
             var result = await _signInManager.PasswordSignInAsync(
                 Email,
                 Password,
@@ -34,11 +34,13 @@ namespace SmartTask.Pages
                 lockoutOnFailure: false
             );
 
+            // Hvis ja, log ind
             if (result.Succeeded)
             {
                 return RedirectToPage("/Dashboard");
             }
 
+            // Hvis nej, vis fejl
             ErrorMessage = "Forkert email eller adgangskode.";
             return Page();
         }
